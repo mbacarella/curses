@@ -9,7 +9,7 @@ CURSES=ncurses
 
 all: libmlcurses.a mlcurses.cma mlcurses.cmxa
 
-mlcurses.o: ml_curses.c functions.c
+ml_curses.o: ml_curses.c functions.c
 	$(OCAMLC) -ccopt "$(CFLAGS)" -c $<
 
 libmlcurses.a: ml_curses.o
