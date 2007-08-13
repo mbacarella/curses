@@ -1,0 +1,6 @@
+name = "@PACKAGE@"
+version = "@VERSION@"
+description = "OCaml bindings for @CURSES@"
+requires = ""
+archive(byte) = "mlcurses.cma"
+archive(native) = "mlcurses.cmxa"
