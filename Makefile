@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.2 2007/08/13 13:03:05 rwmj Exp $
+# $Id: Makefile,v 1.3 2007/08/14 16:49:52 rwmj Exp $
 
 PACKAGE		:= ocaml-curses
 VERSION		:= 1.0.0
@@ -7,8 +7,10 @@ OCAMLC		:= ocamlfind ocamlc
 OCAMLOPT	:= ocamlfind ocamlopt
 OCAMLMKLIB	:= ocamlmklib
 
+CC		:= gcc
 CFLAGS		:= -Wall -fPIC -DPIC
-CPP		:= cpp
+#CPP		:= cpp
+CPP		:= $(CC) -x c -E
 
 CURSES		:= ncurses
 

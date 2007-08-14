@@ -78,7 +78,7 @@
   { RA4 r_##tr(f(a_##ta(aa),a_##tb(ab),a_##tc(ac),a_##td(ad))); }
 #define ML5(f,tr,ta,tb,tc,td,te) \
   value mlcurses_##f(value aa,value ab,value ac,value ad,value ae) \
-  { RA5 r_##tr(f(a_##ta(aa),a_##tb(ab),a_##tc(ac),a_##td(ad),a_##te(ad))); }
+  { RA5 r_##tr(f(a_##ta(aa),a_##tb(ab),a_##tc(ac),a_##td(ad),a_##te(ae))); }
 
 #define ML7(f,tr,ta,tb,tc,td,te,tf,tg) \
   value mlcurses_##f##_bytecode(value *a,int n) \
@@ -164,4 +164,36 @@ static void winch_handler(int n)
 }
 
 #include "functions.c"
+#include "caml/signals.h"
+
+/* The following routines are special-cased to allow other threads to run 
+ * while getch() is blocking */
+value mlcurses_getch(void)
+{
+   CAMLparam0();
+   int ch;
+
+   enter_blocking_section();
+   ch = getch();
+   leave_blocking_section();
+
+   CAMLreturn(Val_int(ch));
+}
+
+
+value mlcurses_wgetch(value win)
+{
+   CAMLparam1(win);
+   int ch;
+   WINDOW* w;
+
+   caml__dummy_win = caml__dummy_win;
+   w = (WINDOW *) win;
+
+   enter_blocking_section();
+   ch = wgetch(w);
+   leave_blocking_section();
+
+   CAMLreturn(Val_int(ch));
+}
 

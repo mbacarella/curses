@@ -168,6 +168,7 @@ ML0d(color_pairs,int) BEG0 r_int(COLOR_PAIRS); END
 
 /* delch */
 
+ML0(use_default_colors,err)
 ML0(delch,err)
 ML1(wdelch,err,window)
 ML2(mvdelch,err,int,int)
@@ -184,8 +185,6 @@ ML1(winsertln,err,window)
 
 /* getch */
 
-ML0(getch,int)
-ML1(wgetch,int,window)
 ML2(mvgetch,int,int,int)
 ML3(mvwgetch,int,window,int,int)
 ML1(ungetch,err,int)
