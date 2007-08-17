@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.3 2007/08/14 16:49:52 rwmj Exp $
+# $Id: Makefile,v 1.4 2007/08/17 10:47:55 rwmj Exp $
 
 PACKAGE		:= ocaml-curses
 VERSION		:= 1.0.0
@@ -32,10 +32,10 @@ curses.cmi: curses.mli
 	$(OCAMLC) -c $^
 
 curses.cmo: curses.ml curses.cmi functions.c keys.ml
-	$(OCAMLC) -pp $(CPP) -c $<
+	$(OCAMLC) -pp "$(CPP)" -c $<
 
 curses.cmx: curses.ml curses.cmi functions.c keys.ml
-	$(OCAMLOPT) -pp $(CPP) -c $<
+	$(OCAMLOPT) -pp "$(CPP)" -c $<
 
 test: test.ml mlcurses.cma libmlcurses.a
 	$(OCAMLC) -o $@ mlcurses.cma $<
