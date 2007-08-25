@@ -1,7 +1,7 @@
-# $Id: Makefile,v 1.4 2007/08/17 10:47:55 rwmj Exp $
+# $Id: Makefile,v 1.5 2007/08/25 11:52:29 rwmj Exp $
 
 PACKAGE		:= ocaml-curses
-VERSION		:= 1.0.0
+VERSION		:= 1.0.1
 
 OCAMLC		:= ocamlfind ocamlc
 OCAMLOPT	:= ocamlfind ocamlopt
