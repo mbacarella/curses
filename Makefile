@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.5 2007/08/25 11:52:29 rwmj Exp $
+# $Id: Makefile,v 1.6 2007/08/25 12:14:01 rwmj Exp $
 
 PACKAGE		:= ocaml-curses
 VERSION		:= 1.0.1
@@ -81,5 +81,5 @@ check-manifest:
 upload:
 	rm -f $(PACKAGE)-$(VERSION).tar.gz.sig
 	gpg -b $(PACKAGE)-$(VERSION).tar.gz
-	ftp-upload -v -h savannah.gnu.org --dir /incoming/savannah/modcaml \
-          $(PACKAGE)-$(VERSION).tar.gz{,.sig}
+	scp $(PACKAGE)-$(VERSION).tar.gz{,.sig} \
+	  rwmj@dl.sv.nongnu.org:/releases/ocaml-tmk
