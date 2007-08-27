@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.6 2007/08/25 12:14:01 rwmj Exp $
+# $Id: Makefile,v 1.7 2007/08/27 16:41:31 smimram Exp $
 
 PACKAGE		:= ocaml-curses
 VERSION		:= 1.0.1
@@ -14,7 +14,11 @@ CPP		:= $(CC) -x c -E
 
 CURSES		:= ncurses
 
-all: libmlcurses.a mlcurses.cma mlcurses.cmxa META
+all: byte opt META
+
+opt: mlcurses.cmxa
+
+byte: libmlcurses.a mlcurses.cma
 
 ml_curses.o: ml_curses.c functions.c
 	$(OCAMLC) -ccopt "$(CFLAGS)" -c $<
@@ -45,13 +49,17 @@ clean:
 
 META:	META.in
 	sed \
-	  -e 's/@PACKAGE@/$(PACKAGE)/' \
+	  -e 's/@PACKAGE@/$(CURSES)/' \
 	  -e 's/@VERSION@/$(VERSION)/' \
 	  -e 's/@CURSES@/$(CURSES)/' \
 	  < $< > $@
 
+doc: $(wildcard *.mli)
+	mkdir -p doc/html
+	ocamldoc -html -stars -d doc/html $(wildcard *.mli)
+
 install:
-	ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
+	ocamlfind install curses META $(wildcard *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli)
 
 # Distribution.
 
