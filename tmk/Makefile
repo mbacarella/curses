@@ -1,5 +1,5 @@
 OCAMLC=ocamlc.opt
-OCFLAGS=-I ../curses -g
+OCFLAGS=-I .. -g
 
 OBJECTS=tmkStruct.cmo tmkArea.cmo tmkStyle.cmo tmkStyle_p.cmo tmkStyle_l.cmo \
 tmkSignal.cmo tmkTerminal.cmo tmkMain.cmo \
