@@ -1,7 +1,7 @@
-# $Id: Makefile,v 1.8 2007/08/28 08:14:56 smimram Exp $
+# $Id: Makefile,v 1.9 2007/08/28 08:54:00 smimram Exp $
 
 PACKAGE		:= ocaml-curses
-VERSION		:= 1.0.1
+VERSION		:= 1.0.2
 
 OCAMLC		:= ocamlfind ocamlc
 OCAMLOPT	:= ocamlfind ocamlopt
@@ -50,7 +50,7 @@ clean:
 	rm -f *.cm* *.o *.a dll*.so test test.opt
 	rm -rf doc/html
 
-META:	META.in
+META: META.in
 	sed \
 	  -e 's/@PACKAGE@/curses/' \
 	  -e 's/@VERSION@/$(VERSION)/' \
@@ -96,3 +96,5 @@ upload:
 	gpg -b $(PACKAGE)-$(VERSION).tar.gz
 	scp $(PACKAGE)-$(VERSION).tar.gz{,.sig} \
 	  $(USER)@dl.sv.nongnu.org:/releases/ocaml-tmk
+
+.PHONY: doc
