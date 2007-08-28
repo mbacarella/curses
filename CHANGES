@@ -1,5 +1,8 @@
 1.0.2
 =====
+* Added documentation in curses.mli.
+* Improved makefile, handles bytecode-only compilation.
+* Libraries are now named curses.cm(x)a.
 
 1.0.1 (2007-08-25)
 =====

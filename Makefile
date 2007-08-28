@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.7 2007/08/27 16:41:31 smimram Exp $
+# $Id: Makefile,v 1.8 2007/08/28 08:14:56 smimram Exp $
 
 PACKAGE		:= ocaml-curses
 VERSION		:= 1.0.1
@@ -9,28 +9,27 @@ OCAMLMKLIB	:= ocamlmklib
 
 CC		:= gcc
 CFLAGS		:= -Wall -fPIC -DPIC
-#CPP		:= cpp
 CPP		:= $(CC) -x c -E
 
 CURSES		:= ncurses
 
 all: byte opt META
 
-opt: mlcurses.cmxa
+opt: libcurses_stubs.a curses.cmxa
 
-byte: libmlcurses.a mlcurses.cma
+byte: libcurses_stubs.a curses.cma
 
 ml_curses.o: ml_curses.c functions.c
-	$(OCAMLC) -ccopt "$(CFLAGS)" -c $<
+	$(OCAMLC) -c -cc $(CC) -ccopt "$(CFLAGS)" -o $@ $<
 
-libmlcurses.a: ml_curses.o
-	$(OCAMLMKLIB) -o mlcurses $< -l$(CURSES)
+libcurses_stubs.a: ml_curses.o
+	$(OCAMLMKLIB) -o curses_stubs $^
 
-mlcurses.cma: curses.cmo
-	$(OCAMLMKLIB) -o mlcurses -linkall $^
+curses.cma: curses.cmo ml_curses.o
+	$(OCAMLC) -a -custom -dllib dllcurses_stubs.so -ccopt -l$(CURSES) -cclib -lcurses_stubs -o $@ $<
 
-mlcurses.cmxa: curses.cmx
-	$(OCAMLMKLIB) -o mlcurses -linkall $^
+curses.cmxa: curses.cmx ml_curses.o
+	$(OCAMLOPT) -a -ccopt -l$(CURSES) -cclib -lcurses_stubs -o $@ $<
 
 curses.cmi: curses.mli
 	$(OCAMLC) -c $^
@@ -41,15 +40,19 @@ curses.cmo: curses.ml curses.cmi functions.c keys.ml
 curses.cmx: curses.ml curses.cmi functions.c keys.ml
 	$(OCAMLOPT) -pp "$(CPP)" -c $<
 
-test: test.ml mlcurses.cma libmlcurses.a
-	$(OCAMLC) -o $@ mlcurses.cma $<
+test: test.ml curses.cma
+	$(OCAMLC) -I . -o $@ curses.cma $<
+
+test.opt: test.ml curses.cmxa
+	$(OCAMLOPT) -I . -o $@ curses.cmxa $<
 
 clean:
-	rm -f *.cm* *.o *.a dll*.so test
+	rm -f *.cm* *.o *.a dll*.so test test.opt
+	rm -rf doc/html
 
 META:	META.in
 	sed \
-	  -e 's/@PACKAGE@/$(CURSES)/' \
+	  -e 's/@PACKAGE@/curses/' \
 	  -e 's/@VERSION@/$(VERSION)/' \
 	  -e 's/@CURSES@/$(CURSES)/' \
 	  < $< > $@
@@ -86,8 +89,10 @@ check-manifest:
 
 # Upload to Savannah.
 
+USER = $(shell whoami)
+
 upload:
 	rm -f $(PACKAGE)-$(VERSION).tar.gz.sig
 	gpg -b $(PACKAGE)-$(VERSION).tar.gz
 	scp $(PACKAGE)-$(VERSION).tar.gz{,.sig} \
-	  rwmj@dl.sv.nongnu.org:/releases/ocaml-tmk
+	  $(USER)@dl.sv.nongnu.org:/releases/ocaml-tmk

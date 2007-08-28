@@ -40,7 +40,7 @@ tmkStyle_l.cmo tmkStyle_l.cmi: tmkStyle_l.ml tmkStyle_p.cmi tmkStyle.cmi
 
 
 test: test.ml $(INTERFACES) tmk.cma
-	$(OCAMLC) -g -o test -I ../curses ../curses/mlcurses.cma -custom \
+	$(OCAMLC) -g -o test -I .. ../mlcurses.cma -custom \
 	tmk.cma unix.cma test.ml
 
 clean:
