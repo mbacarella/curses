@@ -1,3 +1,5 @@
+(*pp gcc -x c -E *)
+
 type window
 type screen
 type terminal

@@ -1,54 +1,31 @@
-# $Id: Makefile,v 1.9 2007/08/28 08:54:00 smimram Exp $
+# $Id: Makefile,v 1.10 2007/09/26 09:39:38 smimram Exp $
 
-PACKAGE		:= ocaml-curses
-VERSION		:= 1.0.2
+PACKAGE = ocaml-curses
+VERSION = 1.0.2
+CURSES = ncurses
 
-OCAMLC		:= ocamlfind ocamlc
-OCAMLOPT	:= ocamlfind ocamlopt
-OCAMLMKLIB	:= ocamlmklib
+RESULT = curses
+SOURCES = ml_curses.c keys.ml curses.mli curses.ml
 
-CC		:= gcc
-CFLAGS		:= -Wall -fPIC -DPIC
-CPP		:= $(CC) -x c -E
+CFLAGS = -g -Wall
+LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.a *.so)
+OCAMLDOCFLAGS = -stars
 
-CURSES		:= ncurses
+all: byte opt
 
-all: byte opt META
+opt: ncl META
 
-opt: libcurses_stubs.a curses.cmxa
+byte: bcl META
 
-byte: libcurses_stubs.a curses.cma
+install: byte libinstall
 
-ml_curses.o: ml_curses.c functions.c
-	$(OCAMLC) -c -cc $(CC) -ccopt "$(CFLAGS)" -o $@ $<
+uninstall: libuninstall
 
-libcurses_stubs.a: ml_curses.o
-	$(OCAMLMKLIB) -o curses_stubs $^
-
-curses.cma: curses.cmo ml_curses.o
-	$(OCAMLC) -a -custom -dllib dllcurses_stubs.so -ccopt -l$(CURSES) -cclib -lcurses_stubs -o $@ $<
-
-curses.cmxa: curses.cmx ml_curses.o
-	$(OCAMLOPT) -a -ccopt -l$(CURSES) -cclib -lcurses_stubs -o $@ $<
-
-curses.cmi: curses.mli
-	$(OCAMLC) -c $^
-
-curses.cmo: curses.ml curses.cmi functions.c keys.ml
-	$(OCAMLC) -pp "$(CPP)" -c $<
-
-curses.cmx: curses.ml curses.cmi functions.c keys.ml
-	$(OCAMLOPT) -pp "$(CPP)" -c $<
-
-test: test.ml curses.cma
+test: test.ml byte
 	$(OCAMLC) -I . -o $@ curses.cma $<
 
-test.opt: test.ml curses.cmxa
+test.opt: test.ml opt
 	$(OCAMLOPT) -I . -o $@ curses.cmxa $<
-
-clean:
-	rm -f *.cm* *.o *.a dll*.so test test.opt
-	rm -rf doc/html
 
 META: META.in
 	sed \
@@ -57,12 +34,10 @@ META: META.in
 	  -e 's/@CURSES@/$(CURSES)/' \
 	  < $< > $@
 
-doc: $(wildcard *.mli)
-	mkdir -p doc/html
-	ocamldoc -html -stars -d doc/html $(wildcard *.mli)
+doc: htdoc
 
-install:
-	ocamlfind install curses META $(wildcard *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli)
+distclean: clean
+	rm -rf doc/curses
 
 # Distribution.
 
@@ -78,10 +53,10 @@ dist:
 check-manifest:
 	@for d in `find -type d -name CVS | grep -v '^\./debian/'`; \
 	do \
-	b=`dirname $$d`/; \
-	awk -F/ '$$1 != "D" {print $$2}' $$d/Entries | \
-	sed -e "s|^|$$b|" -e "s|^\./||"; \
-	done | sort > .check-manifest; \
+	  b=`dirname $$d`/; \
+	  awk -F/ '$$1 != "D" {print $$2}' $$d/Entries | \
+	  sed -e "s|^|$$b|" -e "s|^\./||"; \
+	done | grep -v \.cvsignore | sort > .check-manifest; \
 	sort MANIFEST > .orig-manifest; \
 	diff -u .orig-manifest .check-manifest; rv=$$?; \
 	rm -f .orig-manifest .check-manifest; \
@@ -96,5 +71,7 @@ upload:
 	gpg -b $(PACKAGE)-$(VERSION).tar.gz
 	scp $(PACKAGE)-$(VERSION).tar.gz{,.sig} \
 	  $(USER)@dl.sv.nongnu.org:/releases/ocaml-tmk
+
+include OCamlMakefile
 
 .PHONY: doc

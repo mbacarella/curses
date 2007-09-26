@@ -1,14 +1,15 @@
+CHANGES
 COPYING
 Makefile
 MANIFEST
 META.in
 curses.ml
 curses.mli
-.cvsignore
 functions.c
 keys.ml
 ml_curses.c
 ncurses.txt
+OCamlMakefile
 test.ml
 tmk/Makefile
 tmk/README.tmk
