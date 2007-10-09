@@ -1,7 +1,7 @@
-# $Id: Makefile,v 1.10 2007/09/26 09:39:38 smimram Exp $
+# $Id: Makefile,v 1.11 2007/10/09 12:02:25 smimram Exp $
 
 PACKAGE = ocaml-curses
-VERSION = 1.0.2
+VERSION = 1.0.3
 CURSES = ncurses
 
 RESULT = curses
