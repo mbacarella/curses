@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.11 2007/10/09 12:02:25 smimram Exp $
+# $Id: Makefile,v 1.12 2007/10/10 10:56:08 smimram Exp $
 
 PACKAGE = ocaml-curses
 VERSION = 1.0.3
@@ -11,7 +11,7 @@ CFLAGS = -g -Wall
 LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.a *.so)
 OCAMLDOCFLAGS = -stars
 
-all: byte opt
+all: byte
 
 opt: ncl META
 
