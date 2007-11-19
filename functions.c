@@ -214,13 +214,13 @@ BEG6 r_err(mvwgetnstr(a_window(aa),a_int(ab),a_int(ac),a_string(ad)+a_int(ae),
 /* getyx */
 
 ML1d(getyx,int*int,window)
-BEG1 int x,y; getyx(a_window(aa),y,x); r_int_int(x,y); END
+BEG1 int x,y; getyx(a_window(aa),y,x); r_int_int(y,x); END
 ML1d(getparyx,int*int,window)
-BEG1 int x,y; getparyx(a_window(aa),y,x); r_int_int(x,y); END
+BEG1 int x,y; getparyx(a_window(aa),y,x); r_int_int(y,x); END
 ML1d(getbegyx,int*int,window)
-BEG1 int x,y; getbegyx(a_window(aa),y,x); r_int_int(x,y); END
+BEG1 int x,y; getbegyx(a_window(aa),y,x); r_int_int(y,x); END
 ML1d(getmaxyx,int*int,window)
-BEG1 int x,y; getmaxyx(a_window(aa),y,x); r_int_int(x,y); END
+BEG1 int x,y; getmaxyx(a_window(aa),y,x); r_int_int(y,x); END
   
 /* inch */
 
@@ -383,7 +383,7 @@ ML0(reset_shell_mode,unit)
 ML0(resetty,unit)
 ML0(savetty,unit)
 ML0d(getsyx,int*int)
-BEG0 int x,y; getsyx(y,x); r_int_int(x,y); END
+BEG0 int x,y; getsyx(y,x); r_int_int(y,x); END
 ML2(setsyx,unit,int,int)
 ML1(curs_set,err,int)
 ML1(napms,unit,int)
@@ -392,7 +392,7 @@ ML1d(ripoffline,unit,bool)
 BEG1 ripoffline(Bool_val(aa)?1:-1,ripoff_callback); CAMLreturn(Val_unit); END
 ML0d(get_ripoff,window*int)
 BEG0 if(ripoff_niv==0) failwith("get_ripoff"); ripoff_niv--;
-  r_int_int(ripoff_w[ripoff_niv],ripoff_l[ripoff_niv]); END
+  r_window_int(ripoff_w[ripoff_niv],ripoff_l[ripoff_niv]); END
   
 
 /* mouse */

@@ -29,6 +29,12 @@
     Store_field(ret,0,Val_int(x)); \
     Store_field(ret,1,Val_int(y)); \
     CAMLreturn(ret); }
+#define r_window_int(x,y)	\
+  { CAMLlocal1(ret); AWB(ret); \
+    ret=alloc_tuple(2); \
+    Store_field(ret,0,(value)(x)); \
+    Store_field(ret,1,Val_int(y)); \
+    CAMLreturn(ret); }
 #define r_int_int_int(x,y,z) \
   { CAMLlocal1(ret); AWB(ret); \
     ret=alloc_tuple(3); \
