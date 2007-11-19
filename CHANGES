@@ -2,6 +2,7 @@
 =====
 * get*yx now return coordinates in the right order (thanks Brian Campbell).
 * Fix possible segfault with get_ripoff (thanks Brian Campbell).
+* Indicate that we should link with the curses library (thanks Jeff Meister).
 
 1.0.2 (2007-10-09)
 =====
