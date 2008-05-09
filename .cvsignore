@@ -9,3 +9,9 @@ ocaml-curses-*.tar.gz
 ocaml-curses-*.tar.gz.sig
 .bzr
 .bzrignore
+Makefile
+autom4te.cache
+config.ml
+config.log
+config.status
+configure
