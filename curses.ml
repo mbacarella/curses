@@ -179,3 +179,8 @@ module Key = struct
 #include "keys.ml"
   let f n = f0 + n
 end
+
+module Curses_config = struct
+#include "config.ml"
+end
+

@@ -7,3 +7,5 @@ META
 test
 ocaml-curses-*.tar.gz
 ocaml-curses-*.tar.gz.sig
+.bzr
+.bzrignore

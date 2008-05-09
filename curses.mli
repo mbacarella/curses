@@ -766,3 +766,14 @@ val curs_set : int -> err
 val napms : int -> unit
 val ripoffline : bool -> unit
 val get_ripoff : unit -> window * int
+
+
+(** {2 Configuration} *)
+
+module Curses_config :
+sig
+  (** If [Curses] has been linked against a curses library with wide
+    * character support, then [wide_ncurses] is [true]. *)
+  val wide_ncurses : bool
+end
+

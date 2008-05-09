@@ -5,8 +5,19 @@
 #include <caml/fail.h>
 #include <stdio.h>
 #include <unistd.h>
+
+#ifdef CURSES_HEADER
+#include CURSES_HEADER
+#else
 #include <ncurses.h>
+#endif
+
+#ifdef CURSES_TERM_H
+#include CURSES_TERM_H
+#else
 #include <term.h>
+#endif
+
 /* Du travail pour les esclaves de M$ */
 #include <signal.h>
 #include <termios.h>
