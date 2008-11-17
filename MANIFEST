@@ -1,6 +1,8 @@
 CHANGES
+config.ml.in
+configure.ac
 COPYING
-Makefile
+Makefile.in
 MANIFEST
 META.in
 curses.ml
