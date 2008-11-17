@@ -36,10 +36,15 @@ let t = [|0; 0; 0; 0 |]
 
 let () = assert (inchnstr t 0 3)
 
-let () = winch_handler_on ()
+let () =
+  try winch_handler_on ()
+  with Invalid_argument "winch_handler_on" -> ()
 
-let kup = tigetstr "kcuu1"
-let () = assert (addstr kup)
+let () =
+  try
+    let kup = tigetstr "kcuu1" in
+    assert (addstr kup)
+  with Failure "tigetstr" -> ()
 
 let acs = get_acs_codes ()
 let () = assert (addch acs.Acs.ulcorner)
@@ -80,4 +85,3 @@ done*)
 (*let () = Hashtbl.iter (fun a (b,c) ->
   print_string (a ^ "\t" ^ b ^ "\t" ^ c); print_newline ())
   str_terminfo_variables*)
-

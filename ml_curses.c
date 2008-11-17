@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <caml/mlvalues.h>
 #include <caml/alloc.h>
 #include <caml/memory.h>
@@ -5,6 +9,14 @@
 #include <caml/fail.h>
 #include <stdio.h>
 #include <unistd.h>
+
+/* For PDCurses we need to define the following so that global
+ * variables are declared (in the header) with __dllspec(dllimport).
+ */
+#ifdef PDCURSES
+#define PDC_DLL_BUILD
+#undef CURSES_LIBRARY
+#endif
 
 #ifdef CURSES_HEADER
 #include CURSES_HEADER
@@ -18,10 +30,18 @@
 #include <term.h>
 #endif
 
+#ifdef HAVE_WINDOWS_H
+#include <windows.h>
+#endif
+
 /* Du travail pour les esclaves de M$ */
 #include <signal.h>
+#ifdef HAVE_TERMIOS_H
 #include <termios.h>
+#endif
+#ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>
+#endif
 
 #define AWB(x) caml__dummy_##x=caml__dummy_##x; /* anti-warning bugware */
 
@@ -150,6 +170,17 @@
 #define BEG9 { RA9 {
 #define END }}
 
+/* RWMJ: Not implemented functions raise Invalid_argument
+ * ("function_name").  This can happen for example when we are not
+ * linked to real ncurses, particularly on Windows.
+ */
+#define ML0_notimpl(f,tr)					\
+  value mlcurses_##f(void) BEG0 caml_invalid_argument (#f); CAMLnoreturn; END
+#define ML1_notimpl(f,tr,ta)						\
+  value mlcurses_##f(value aa) BEG1 caml_invalid_argument (#f); CAMLnoreturn; END
+#define ML2_notimpl(f,tr,ta,tb)						\
+  value mlcurses_##f(value aa, value ab) BEG2 caml_invalid_argument (#f); CAMLnoreturn; END
+
 static WINDOW *ripoff_w[5];
 static int ripoff_l[5];
 static int ripoff_niv=0;
@@ -173,12 +204,14 @@ static int putc_callback(int c)
   CAMLreturn(Is_exception_result(ret)?-1:0);
 }
 
+#ifndef WIN32
 /* Du travail pour les esclaves de M$ */
 static void winch_handler(int n)
 {
   signal(n,winch_handler);
   ungetch(KEY_RESIZE);
 }
+#endif
 
 #include "functions.c"
 #include "caml/signals.h"

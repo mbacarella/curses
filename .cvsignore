@@ -12,6 +12,13 @@ ocaml-curses-*.tar.gz.sig
 Makefile
 autom4te.cache
 config.ml
+config.h
+config.h.in
 config.log
 config.status
 configure
+dllcurses_stubs.dll
+test.opt
+._bcdi
+._ncdi
+._d

@@ -21,12 +21,16 @@ AC_ARG_ENABLE(widec,
 
 # Find a C compiler
 
-AC_PROG_CC()
+AC_PROG_CC
+AC_PROG_CC_C_O
+AC_PROG_RANLIB
 
 ORIG_LIBS="$LIBS"
 ORIG_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CURSES_INCLUDE $ORIG_CPPFLAGS"
 
+# Non-required headers.
+AC_CHECK_HEADERS([termios.h sys/ioctl.h windows.h])
 
 # Check for ncurses, and test a number of different locations for the header
 
@@ -66,7 +70,14 @@ AC_TRY_LINK(
   [#include <curses.h>], [initscr(); use_default_colors()],
   [CURSES_LIB=-lcurses
    AC_DEFINE(CURSES_HEADER, <curses.h>, [Defined to ncurses header file])],
-) ]) ]) ])
+  [
+LIBS="-lpdcurses $ORIG_LIBS"
+AC_TRY_LINK(
+  [#include <curses.h>], [initscr(); use_default_colors()],
+  [CURSES_LIB=-lpdcurses
+   AC_DEFINE(PDCURSES, 1, [Define if this is PDCurses])
+   AC_DEFINE(CURSES_HEADER, <curses.h>, [Defined to pdcurses header file])],
+) ]) ]) ]) ])
 fi
 
 if test -n "$CURSES_LIB"
@@ -78,19 +89,19 @@ fi
 
 # Try to locate term.h, which has a sadly nonstandardized location
 
-AC_MSG_CHECKING(for ncurses term.h)
+AC_MSG_CHECKING(for term.h)
 AC_TRY_COMPILE(
-   [#include <term.h>], [TERMTYPE __dummy],
+   [#include <term.h>], [TERMINAL __dummy],
    [TERM_H_STRING="<term.h>"
     AC_DEFINE(CURSES_TERM_H, <term.h>, [Defined to ncurses term.h file])],
    [
 AC_TRY_COMPILE(
-   [#include <ncurses/term.h>], [TERMTYPE __dummy],
+   [#include <ncurses/term.h>], [TERMINAL __dummy],
    [TERM_H_STRING="<ncurses/term.h>"
     AC_DEFINE(CURSES_TERM_H, <ncurses/term.h>, [Defined to ncurses term.h file])],
    [
 AC_TRY_COMPILE(
-   [#include <curses/term.h>], [TERMTYPE __dummy],
+   [#include <curses/term.h>], [TERMINAL __dummy],
    [TERM_H_STRING="<curses/term.h>"
     AC_DEFINE(CURSES_TERM_H, <curses/term.h>, [Defined to ncurses term.h file])],
 ) ]) ])
@@ -126,6 +137,12 @@ then
   fi
 fi
 
+# Look for some functions which aren't found in all
+# curses implementations, eg. PDCurses.  These are
+# optional: we will substitute them where we can.
+
+AC_CHECK_FUNCS([resizeterm resize_term])
+
 CURSES_LIB_BASE=`expr "$CURSES_LIB" : '-l\(.*\)'`
 CPPFLAGS="$ORIG_CPPFLAGS"
 LIBS="$ORIG_LIBS"
@@ -144,10 +161,12 @@ AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LDFLAGS)
 
-
 # Generate the Makefile and config module
 
-AC_OUTPUT(Makefile config.ml)
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_FILES(Makefile config.ml)
+AC_OUTPUT
+
 chmod a-w Makefile
 
 

@@ -448,7 +448,18 @@ ML3(wredrawln,err,window,int,int)
 /* resize */
 
 ML3(wresize,err,window,int,int)
+#ifdef HAVE_RESIZETERM		/* This is an ncurses extension. */
 ML2(resizeterm,err,int,int)
+#else
+#ifdef HAVE_RESIZE_TERM
+/* Just use resize_term as a substitute if it exists.
+ * The definitions are close enough.
+ */
+ML2d(resizeterm,err,int,int) BEG2 r_err(resize_term(a_int(aa),a_int(ab))); END
+#else
+ML2_notimpl(resizeterm,err,int,int)
+#endif
+#endif
 
 /* scr_dump */
 
@@ -525,11 +536,22 @@ BEG3 putc_function=ac;
 ML2d(vidputs,err,chtype,(char->unit))
 BEG2 putc_function=ab;
   r_err(vidputs(a_chtype(aa),putc_callback)); END
+
+#ifdef PDCURSES
+/* RWMJ: PDCurses has a moronic definition of tparm where they
+ * seem to be trying to implement varargs on their own.  Prototype
+ * a sensible definition instead, at the cost of a warning:
+ */
+static char *(*mlcurses_rpl_tparm) (const char *, ...) = (void *) tparm;
+#else
+#define mlcurses_rpl_tparm tparm
+#endif
+
 ML2d(tparm,string,string,int array)
 BEG2 int t[10],i,n=Wosize_val(ab);
   if(n>10) n=10;
   for(i=0;i<n;i++) t[i]=a_int(Field(ab,i));
-  r_string(tparm(a_string(aa),t[0],t[1],t[2],t[3],t[4],
+  r_string(mlcurses_rpl_tparm(a_string(aa),t[0],t[1],t[2],t[3],t[4],
     t[5],t[6],t[7],t[8],t[9])); END
 #define arrayret(nt) \
   CAMLlocal1(s); \
@@ -550,9 +572,15 @@ BEG2 int t[10],i,n=Wosize_val(ab);
     Store_field(s,2,copy_string(nt##fnames[n])); \
   } \
   CAMLreturn(s);
+#ifndef PDCURSES
 ML1d(bool_terminfo_variable,string*string*string,int) BEG1 arrayret(bool) END
 ML1d(num_terminfo_variable,string*string*string,int) BEG1 arrayret(num) END
 ML1d(str_terminfo_variable,string*string*string,int) BEG1 arrayret(str) END
+#else
+ML1_notimpl(bool_terminfo_variable,string*string*string,int)
+ML1_notimpl(num_terminfo_variable,string*string*string,int)
+ML1_notimpl(str_terminfo_variable,string*string*string,int)
+#endif
 
 /* touch */
 
@@ -611,19 +639,42 @@ END
 #undef ca
 
 /* Du travail pour les esclaves de M$ */
+#ifndef WIN32
 ML0d(winch_handler_on,unit)
 BEG0 signal(SIGWINCH,winch_handler); CAMLreturn(Val_unit); END
 ML0d(winch_handler_off,unit)
 BEG0 signal(SIGWINCH,SIG_IGN); CAMLreturn(Val_unit); END
+#else
+ML0_notimpl(winch_handler_on,unit)
+ML0_notimpl(winch_handler_off,unit)
+#endif
 
 ML0d(get_size,int*int)
-BEG0 struct winsize ws;
+BEG0
+#ifndef WIN32
+  struct winsize ws;
   ioctl(0,TIOCGWINSZ,&ws);
   r_int_int(ws.ws_row,ws.ws_col);
+#else
+  COORD max;
+  HANDLE con;
+  con = GetStdHandle (STD_OUTPUT_HANDLE);
+  max = GetLargestConsoleWindowSize (con);
+  r_int_int (max.Y, max.X);
+#endif
 END
 ML1d(get_size_fd,int*int,Unix.file_descr)
-BEG1 struct winsize ws;
+BEG1
+#ifndef WIN32
+  struct winsize ws;
   ioctl(a_int(aa),TIOCGWINSZ,&ws);
   r_int_int(ws.ws_row,ws.ws_col);
+#else
+  /* XXX RWMJ: We could implement this if we could turn a file_descr
+   * into a Windows HANDLE somehow.
+   */
+  caml_invalid_argument ("get_size_fd");
+  CAMLnoreturn;
+#endif
 END
 

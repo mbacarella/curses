@@ -42,6 +42,10 @@ type err = bool
 #define ML5d(f,tr,ta,tb,tc,td,te) ML5(f,tr,ta,tb,tc,td,te)
 #define ML6d(f,tr,ta,tb,tc,td,te,tf) ML6(f,tr,ta,tb,tc,td,te,tf)
 
+#define ML0_notimpl(f,tr) ML0(f,tr)
+#define ML1_notimpl(f,tr,ta) ML1(f,tr,ta)
+#define ML2_notimpl(f,tr,ta,tb) ML2(f,tr,ta,tb)
+
 #define BEG (*
 #define BEG0 BEG
 #define BEG1 BEG
@@ -125,9 +129,15 @@ let () =
       Hashtbl.add h c (a, b);
       ins f h (n + 1)
     ) in
-  ins bool_terminfo_variable bool_terminfo_variables 0;
-  ins num_terminfo_variable num_terminfo_variables 0;
-  ins str_terminfo_variable str_terminfo_variables 0
+  (* These functions do not exist on all curses implementations,
+   * so if they throw Invalid_argument, just ignore it.
+   *)
+  try
+    ins bool_terminfo_variable bool_terminfo_variables 0;
+    ins num_terminfo_variable num_terminfo_variables 0;
+    ins str_terminfo_variable str_terminfo_variables 0
+  with
+    Invalid_argument _ -> ()
   
 /*
 (* Bon, je vais recopier les constantes directement, parceque je n'ai
