@@ -14,6 +14,8 @@ CFLAGS = -g -Wall $(DEFS)
 LDFLAGS = @LDFLAGS@
 RANLIB = @RANLIB@
 LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.a *.so)
+OCAMLFLAGS = -g
+OCAMLLDFLAGS = -g
 OCAMLDOCFLAGS = -stars
 
 all: byte
