@@ -10,7 +10,7 @@ RESULT = curses
 SOURCES = ml_curses.c keys.ml curses.mli curses.ml
 
 CC = @CC@
-CFLAGS = -g -Wall $(DEFS)
+CFLAGS = @CFLAGS@ $(DEFS)
 LDFLAGS = @LDFLAGS@
 RANLIB = @RANLIB@
 LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.a *.so)
