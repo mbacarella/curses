@@ -91,17 +91,17 @@ fi
 
 AC_MSG_CHECKING(for term.h)
 AC_TRY_COMPILE(
-   [#include <term.h>], [TERMINAL __dummy],
+   [#include <term.h>], [TERMINAL *__dummy],
    [TERM_H_STRING="<term.h>"
     AC_DEFINE(CURSES_TERM_H, <term.h>, [Defined to ncurses term.h file])],
    [
 AC_TRY_COMPILE(
-   [#include <ncurses/term.h>], [TERMINAL __dummy],
+   [#include <ncurses/term.h>], [TERMINAL *__dummy],
    [TERM_H_STRING="<ncurses/term.h>"
     AC_DEFINE(CURSES_TERM_H, <ncurses/term.h>, [Defined to ncurses term.h file])],
    [
 AC_TRY_COMPILE(
-   [#include <curses/term.h>], [TERMINAL __dummy],
+   [#include <curses/term.h>], [TERMINAL *__dummy],
    [TERM_H_STRING="<curses/term.h>"
     AC_DEFINE(CURSES_TERM_H, <curses/term.h>, [Defined to ncurses term.h file])],
 ) ]) ])
