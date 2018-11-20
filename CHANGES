@@ -1,4 +1,11 @@
-1.0.3 (unreleased)
+1.0.4 (2018-11-20)
+=====
+* Update configure script for ncurses 6.1 (Paul Pelzl).
+* Use CFLAGS from ./configure.
+* Enable debugging for all builds.
+* Allow compilation against PDCurses on Windows.
+
+1.0.3 (2008-11-17)
 =====
 * get*yx now return coordinates in the right order (thanks Brian Campbell).
 * Fix possible segfault with get_ripoff (thanks Brian Campbell).
