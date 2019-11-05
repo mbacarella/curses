@@ -108,7 +108,7 @@ module Acs = struct
 end
 
 
-#include "functions.c"
+#include "_functions.c"
 
 (* these two were written separately in ml_curses.c,
  * to permit proper threading behavior *)
@@ -138,7 +138,7 @@ let () =
     ins str_terminfo_variable str_terminfo_variables 0
   with
     Invalid_argument _ -> ()
-  
+
 /*
 (* Bon, je vais recopier les constantes directement, parceque je n'ai
  * aucune idée de comment générer ça automatiquement proprement. Si ça ne
@@ -148,7 +148,7 @@ let () =
 
 module A = struct
   let normal = 0
-  let attributes = 0x7FFFFF00 
+  let attributes = 0x7FFFFF00
   let chartext   = 0x000000FF
   let color      = 0x0000FF00
   let standout   = 0x00010000
@@ -186,11 +186,11 @@ module Color = struct
 end
 
 module Key = struct
-#include "keys.ml"
+#include "_keys.ml"
   let f n = f0 + n
 end
 
 module Curses_config = struct
-#include "config.ml"
+#include "_config.ml"
 end
 

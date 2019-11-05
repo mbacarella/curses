@@ -1,0 +1,60 @@
+(library
+ (name curses)
+ (public_name curses)
+ (synopsis "OCaml bindings for ncursesw")
+ (modules curses)
+ (wrapped false)
+ (c_names ml_curses)
+ (c_flags
+  (:include c_flags.sexp))
+ (c_library_flags
+  (:include c_library_flags.sexp)))
+
+(executable
+ (name discover)
+ (modules discover)
+ (libraries dune.configurator))
+
+(rule
+ (copy functions.c _functions.c))
+
+(rule
+ (copy keys.ml _keys.ml))
+
+(rule
+ (copy config.ml _config.ml))
+
+(rule
+ (target ml_curses.h)
+ (deps config.h)
+ (action
+  (with-stdout-to
+   %{target}
+   (echo ""))))
+
+(rule
+ (copy _config.h config.h))
+
+(rule
+ (target curses.ml)
+ (deps _curses.ml _config.ml _functions.c _keys.ml config.h)
+ (action
+  (chdir
+   %{workspace_root}
+   (with-stdout-to
+    %{target}
+    (system "%{bin:gcc} -x c -E _curses.ml")))))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp config.ml _config.h)
+ (deps
+  (:discover discover.exe))
+ (action
+  (run %{discover})))
+
+(test
+ (name test)
+ (modules test)
+ (libraries curses)
+ (action
+  (run %{exe:test.exe})))
