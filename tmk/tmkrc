@@ -1,0 +1,13 @@
+style[all]="FwBl"
+style[focus]="<GBr"
+("*.liste") {
+  scroll_step=1
+  style[all]="BwFb"
+  style[focus]="<Br"
+  style[selected]="<By"
+}
+
+("*.entry") {
+  style[all]="ByFb"
+  style[focus]="<Bc"
+}

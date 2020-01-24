@@ -1,0 +1,22 @@
+1.0.4 (2018-11-20)
+=====
+* Update configure script for ncurses 6.1 (Paul Pelzl).
+* Use CFLAGS from ./configure.
+* Enable debugging for all builds.
+* Allow compilation against PDCurses on Windows.
+
+1.0.3 (2008-11-17)
+=====
+* get*yx now return coordinates in the right order (thanks Brian Campbell).
+* Fix possible segfault with get_ripoff (thanks Brian Campbell).
+* Indicate that we should link with the curses library (thanks Jeff Meister).
+
+1.0.2 (2007-10-09)
+=====
+* Started to add documentation in curses.mli.
+* Using OCamlMakefile for the makefile, now handles bytecode-only compilation.
+* Libraries are now named curses.cm(x)a.
+
+1.0.1 (2007-08-25)
+=====
+* Initial release.
