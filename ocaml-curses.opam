@@ -1,0 +1,22 @@
+opam-version: "2.0"
+version: "1.0.5"
+maintainer: "michael.bacarella@gmail.com"
+authors: ["Nicolas George"]
+homepage: "https://github.com/mbacarella/ocaml-curses"
+bug-reports: "http://github.com/mbacarella/ocaml-curses#issues"
+dev-repo: "git+https://github.com/mbacarella/ocaml-curses"
+build: [
+  ["./configure" "--enable-widec"]
+  [make "OCAMLMAKEFILE=OCamlMakefile" "byte"]
+  [make "OCAMLMAKEFILE=OCamlMakefile" "opt"]
+]
+remove: [["ocamlfind" "remove" "curses"]]
+depends: [
+    "ocaml"
+    "ocamlfind" {build}
+    "conf-ncurses"
+]
+install: [make "OCAMLMAKEFILE=OCamlMakefile" "install"]
+synopsis: "Bindings to curses/ncurses"
+description: "Tools for building terminal-based user interfaces"
+flags: light-uninstall
