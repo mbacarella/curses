@@ -1,6 +1,6 @@
 1.0.5 (2020-01-24)
 =====
-* Move project to github.com/mbacarella/ocaml-curses
+* Move project to github.com/mbacarella/curses
 * Install *.cmx files to LIBDIR so that dune doesn't warn about
   projects that build against curses.
 
