@@ -1,3 +1,9 @@
+1.0.5 (2020-01-24)
+=====
+* Move project to github.com/mbacarella/ocaml-curses
+* Install *.cmx files to LIBDIR so that dune doesn't warn about
+  projects that build against curses.
+
 1.0.4 (2018-11-20)
 =====
 * Update configure script for ncurses 6.1 (Paul Pelzl).
