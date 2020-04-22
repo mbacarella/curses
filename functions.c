@@ -59,7 +59,7 @@ BEG5 r_err(mvaddnstr(a_int(aa),a_int(ab),
 ML6d(mvwaddnstr,err,window,int,int,string,int,int)
 BEG6 r_err(mvwaddnstr(a_window(aa),a_int(ab),a_int(ac),
   a_string(ad)+a_int(ae),a_int(af))); END
-  
+
 /* attr */
 
 ML1(attroff,unit,int)
@@ -158,7 +158,7 @@ ML4(init_color,err,int,int,int,int)
 ML0(has_colors,bool)
 ML0(can_change_color,bool)
 ML1d(color_content,int*int*int,int)
-BEG1 short x,y,z; if(color_content(Int_val(aa),&x,&y,&z)==ERR) 
+BEG1 short x,y,z; if(color_content(Int_val(aa),&x,&y,&z)==ERR)
   x=y=z=-1; r_int_int_int(x,y,z); END
 ML1d(pair_content,int*int,int)
 BEG1 short x,y; if(pair_content(Int_val(aa),&y,&x)==ERR) x=y=-1;
@@ -221,7 +221,7 @@ ML1d(getbegyx,int*int,window)
 BEG1 int x,y; getbegyx(a_window(aa),y,x); r_int_int(y,x); END
 ML1d(getmaxyx,int*int,window)
 BEG1 int x,y; getmaxyx(a_window(aa),y,x); r_int_int(y,x); END
-  
+
 /* inch */
 
 ML0(inch,chtype)
@@ -294,8 +294,8 @@ BEG3
   SCREEN *s;
   AWB(r);
   r=alloc_tuple(3);
-  Store_field(r,0,Val_int(fa));
-  Store_field(r,1,Val_int(fb));
+  Store_field(r,0,Val_long(fa));
+  Store_field(r,1,Val_long(fb));
   s=newterm(a_string(aa),fa,fb);
   if(s==NULL){ fclose(fa); fclose(fb); failwith("newterm"); }
   Store_field(r,2,(value)s);
@@ -303,7 +303,8 @@ BEG3
 ML1(set_term,unit,screen)
 ML1d(delscreen,unit,screen)
 BEG1 delscreen(a_screen(aa));
-  fclose((FILE * )Field(aa,0)); fclose((FILE * )Field(aa,1));
+  fclose((FILE * )Long_val(Field(aa,0)));
+  fclose((FILE * )Long_val(Field(aa,1)));
   CAMLreturn(Val_unit); END
 ML0d(stdscr,window)
 BEG0 r_window(stdscr); END
@@ -393,7 +394,7 @@ BEG1 ripoffline(Bool_val(aa)?1:-1,ripoff_callback); CAMLreturn(Val_unit); END
 ML0d(get_ripoff,window*int)
 BEG0 if(ripoff_niv==0) failwith("get_ripoff"); ripoff_niv--;
   r_window_int(ripoff_w[ripoff_niv],ripoff_l[ripoff_niv]); END
-  
+
 
 /* mouse */
 
@@ -677,4 +678,3 @@ BEG1
   CAMLnoreturn;
 #endif
 END
-
