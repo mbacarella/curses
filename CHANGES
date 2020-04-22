@@ -1,3 +1,7 @@
+1.0.6 (2020-02-22)
+=====
+* Fix segfault bug in delscreen (thanks to Shang Tsung for the report!)
+
 1.0.5 (2020-01-24)
 =====
 * Move project to github.com/mbacarella/curses
