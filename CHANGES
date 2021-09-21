@@ -1,3 +1,7 @@
+1.0.7 (2021-09-21)
+=====
+* Makefile still had VERSION = 1.0.4 the whole time. Fix it with a new release.
+
 1.0.6 (2020-02-22)
 =====
 * Fix segfault bug in delscreen (thanks to Shang Tsung for the report!)
