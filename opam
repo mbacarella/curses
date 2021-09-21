@@ -1,5 +1,5 @@
 opam-version: "2.0"
-version: "1.0.7"
+version: "1.0.8"
 maintainer: "michael.bacarella@gmail.com"
 authors: ["Nicolas George"]
 homepage: "https://github.com/mbacarella/curses"
