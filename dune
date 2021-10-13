@@ -60,6 +60,8 @@
   (run %{exe:test.exe})))
 
 ; disable docstring warnings
+
 (env
-  (dev
-    (flags (:standard -w -50))))
+ (dev
+  (flags
+   (:standard -w -50))))
