@@ -1,5 +1,7 @@
 (lang dune 1.11)
 
+(name curses)
+
 (generate_opam_files true)
 
 (license "LGPL-2.1-or-later WITH OCaml-linking-exception")
