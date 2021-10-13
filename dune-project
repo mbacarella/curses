@@ -15,6 +15,6 @@
  (description "Tools for building terminal-based user interfaces")
  (depends
   conf-ncurses
-  dune.configurator
+  dune-configurator
   (ocaml
    (>= 4.02.0))))
