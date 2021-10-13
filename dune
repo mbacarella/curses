@@ -4,9 +4,11 @@
  (synopsis "OCaml bindings for ncursesw")
  (modules curses)
  (wrapped false)
- (c_names ml_curses)
- (c_flags
-  (:include c_flags.sexp))
+ (foreign_stubs
+  (language c)
+  (names ml_curses)
+  (flags
+   (:include c_flags.sexp)))
  (c_library_flags
   (:include c_library_flags.sexp)))
 
