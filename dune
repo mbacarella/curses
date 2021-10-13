@@ -52,12 +52,15 @@
  (action
   (run %{discover})))
 
-(test
- (name test)
- (modules test)
- (libraries curses)
- (action
-  (run %{exe:test.exe})))
+; 2021-10-13 mbac: test.ml isn't a real unit test, and it doesn't seem to
+;  run from the testing environment properly (because curses?)
+;  [dune exec ./test.exe] is fine though
+;(test
+; (name test)
+; (modules test)
+; (libraries curses)
+; (action
+;  (run %{exe:test.exe})))
 
 ; disable docstring warnings
 
