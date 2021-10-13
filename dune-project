@@ -4,6 +4,8 @@
 
 (license "LGPL-2.1-or-later WITH OCaml-linking-exception")
 
+(authors "Michael Bacarella <m@bacarella.com>")
+
 (homepage "https://github.com/mbacarella/curses")
 
 (source
