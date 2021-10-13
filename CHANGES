@@ -1,6 +1,7 @@
 1.0.9 (2021-10-12)
 =====
 * Convert to dune. Thanks to Olaf Hering <olafhering> for doing most of this!
+* Dead code in tmk/ and other junk files removed.
 
 1.0.8 (2021-09-21)
 =====
