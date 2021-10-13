@@ -216,7 +216,7 @@ static void winch_handler(int n)
 #include "functions.c"
 #include "caml/signals.h"
 
-/* The following routines are special-cased to allow other threads to run 
+/* The following routines are special-cased to allow other threads to run
  * while getch() is blocking */
 value mlcurses_getch(void)
 {
@@ -246,4 +246,3 @@ value mlcurses_wgetch(value win)
 
    CAMLreturn(Val_int(ch));
 }
-
