@@ -4,19 +4,16 @@
 
 (license "LGPL-2.1-or-later WITH OCaml-linking-exception")
 
-(homepage "https://www.nongnu.org/ocaml-tmk/")
+(homepage "https://github.com/mbacarella/curses")
 
 (source
- (github olafhering/ocaml-curses))
+ (github mbacarella/curses))
 
 (package
  (name curses)
  (synopsis "Bindings to ncurses")
- (description
-   "Tools for building terminal-based user interfaces")
+ (description "Tools for building terminal-based user interfaces")
  (depends
-  (dune
-   (>= 1.11))
   dune.configurator
   (ocaml
    (>= 4.02.0))))

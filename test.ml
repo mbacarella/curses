@@ -36,11 +36,11 @@ let t = [|0; 0; 0; 0 |]
 
 let () = assert (inchnstr t 0 3)
 
-let () =
+let[@warning "-52"] () =
   try winch_handler_on ()
   with Invalid_argument "winch_handler_on" -> ()
 
-let () =
+let[@warning "-52"] () =
   try
     let kup = tigetstr "kcuu1" in
     assert (addstr kup)

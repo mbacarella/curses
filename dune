@@ -58,3 +58,8 @@
  (libraries curses)
  (action
   (run %{exe:test.exe})))
+
+; disable docstring warnings
+(env
+  (dev
+    (flags (:standard -w -50))))
