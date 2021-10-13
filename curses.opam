@@ -2,13 +2,14 @@
 opam-version: "2.0"
 synopsis: "Bindings to ncurses"
 description: "Tools for building terminal-based user interfaces"
+authors: ["Michael Bacarella <m@bacarella.com>"]
 license: "LGPL-2.1-or-later WITH OCaml-linking-exception"
 homepage: "https://github.com/mbacarella/curses"
 bug-reports: "https://github.com/mbacarella/curses/issues"
 depends: [
   "dune" {>= "1.11"}
   "conf-ncurses"
-  "dune.configurator"
+  "dune-configurator"
   "ocaml" {>= "4.02.0"}
 ]
 build: [
