@@ -30,10 +30,6 @@ jobs:
         with:
           ocaml-version: ${{ matrix.ocaml-version }}
 
-      - run: ./scripts/install-os-deps.sh
-
-      - run: ./scripts/install-build-deps.sh
-
       - run: opam install . --deps-only --with-test
 
       - run: opam exec -- dune build
