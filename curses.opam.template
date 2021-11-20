@@ -1,0 +1,4 @@
+depexts: [
+  # needed to include termios.h?
+  "cygwin-devel"  {os-family "cygwin"}
+]
