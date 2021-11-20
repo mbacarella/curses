@@ -29,3 +29,7 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/mbacarella/curses.git"
+depexts: [
+  # needed to include termios.h?
+  "cygwin-devel"  {os-family "cygwin"}
+]
