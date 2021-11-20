@@ -21,8 +21,8 @@ let () =
 
       let config_h =
         [
-          "#define CURSES_HEADER <curses.h>";
-          "#define CURSES_TERM_H <term.h>";
+          "#define CURSES_HEADER <ncursesw/curses.h>";
+          "#define CURSES_TERM_H <ncursesw/term.h>";
           "#define HAVE_TERMIOS_H 1";
           "#define HAVE_SYS_IOCTL_H 1";
         ]
