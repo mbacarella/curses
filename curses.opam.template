@@ -1,4 +1,0 @@
-depexts: [
-  # possibly need this for termios.h?
-  ["cygwin-devel"]  {os = "win32"}
-]

@@ -18,14 +18,23 @@ let () =
             | None -> stale_ncursesw
             | Some deps -> deps)
       in
-
       let config_h =
-        [
-          "#define CURSES_HEADER <curses.h>";
-          "#define CURSES_TERM_H <term.h>";
-          "#define HAVE_TERMIOS_H 1";
-          "#define HAVE_SYS_IOCTL_H 1";
-        ]
+        match Sys.os_type with
+        | "Unix" ->
+          [
+            "#define CURSES_HEADER <curses.h>";
+            "#define CURSES_TERM_H <term.h>";
+            "#define HAVE_TERMIOS_H 1";
+            "#define HAVE_SYS_IOCTL_H 1";
+          ]
+        | "Win32" | "Cygwin" ->
+          [
+            "#define CURSES_HEADER <curses.h>";
+            "#define CURSES_TERM_H <term.h>";
+            "#define HAVE_WINDOWS 1";
+            "#define HAVE_SYS_IOCTL_H 1";
+          ]
+        | os -> failwith (Printf.sprintf "Sys.os_type: %s: unknown os type"  os)
       in
       C.Flags.write_lines "_config.h" config_h;
 
