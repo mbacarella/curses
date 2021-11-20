@@ -31,7 +31,7 @@ let () =
           [
             "#define CURSES_HEADER <curses.h>";
             "#define CURSES_TERM_H <term.h>";
-            "#define HAVE_WINDOWS 1";
+            "#define HAVE_WINDOWS_H 1";
           ]
         | os -> failwith (Printf.sprintf "Sys.os_type: %s: unknown os type"  os)
       in
