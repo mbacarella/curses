@@ -1,3 +1,5 @@
+![example workflow](https://github.com/mbacarella/curses/actions/workflows/workflow.yml/badge.svg)
+
 Bindings to curses/ncurses
 ====
 
