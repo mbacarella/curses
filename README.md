@@ -46,3 +46,5 @@ History
 
 This is a fork of the now unmaintained ocaml-twk package at
 https://www.nongnu.org/ocaml-tmk/
+
+See [CHANGES.md](CHANGES.md) for change history.
