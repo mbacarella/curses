@@ -2,9 +2,10 @@
 =====
 * Updated to dune-lang 2.7, so that we don't have that generated .opam file
   bug anymore.
+* Fixed build on Arch Linux, issue #4
 * Fixed discover.ml to more durably locate curses.h headers
 * Fixed build for Windows
-* Added Github Workflow for CI tests
+* Added Github Workflow for CI build on Mac/Windows/Linux (uses ocaml-setup)
 * Ran ocamlformat
 
 1.0.9 (2021-10-12)
