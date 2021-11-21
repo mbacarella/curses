@@ -10,6 +10,7 @@ bug-reports: "https://github.com/mbacarella/curses/issues"
 depends: [
   "dune" {>= "2.7"}
   "conf-ncurses"
+  "conf-pkg-config"
   "dune-configurator"
   "ocaml" {>= "4.02.0"}
   "odoc" {with-doc}
