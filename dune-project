@@ -4,7 +4,7 @@
 
 (generate_opam_files true)
 
-(licnese "LGPL-2.1-or-later WITH OCaml-LGPL-linking-exception")
+(license "LGPL-2.1-or-later WITH OCaml-LGPL-linking-exception")
 
 (authors "Nicolas George")
 
