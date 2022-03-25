@@ -1,3 +1,7 @@
+<unreleased>
+=====
+* Don't hard-code gcc, use cc instead. Thanks @atupone for PR #7
+
 1.0.10 (2021-11-21)
 =====
 * Updated to dune-lang 2.7, so that we don't have that generated .opam file
