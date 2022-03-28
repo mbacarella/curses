@@ -1,4 +1,4 @@
-name: build on Windows/Mac/Linux
+name: build on Mac/Linux
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ jobs:
         os:
           - macos-latest
           - ubuntu-latest
-          - windows-latest
+          # - windows-latest
         ocaml-compiler:
           - 4.12.0
 
