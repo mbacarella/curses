@@ -1,6 +1,9 @@
 <unreleased>
 =====
 * Don't hard-code gcc, use cc instead. Thanks @atupone for PR #7
+* Remove Windows builds from Github workflow, too difficult to diagnose
+  right now; Mac and Linux remain
+* Add missing dependency on Unix #8 (Thanks @dra27)
 
 1.0.10 (2021-11-21)
 =====
