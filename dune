@@ -9,6 +9,7 @@
   (names ml_curses)
   (flags
    (:include c_flags.sexp)))
+ (libraries unix)
  (c_library_flags
   (:include c_library_flags.sexp)))
 
