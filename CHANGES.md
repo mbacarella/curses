@@ -1,4 +1,4 @@
-<unreleased>
+unreleased
 =====
 * Don't hard-code gcc, use cc instead. Thanks @atupone for PR #7
 * Remove Windows builds from Github workflow, too difficult to diagnose
