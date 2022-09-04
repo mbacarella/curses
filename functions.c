@@ -294,17 +294,17 @@ BEG3
   SCREEN *s;
   AWB(r);
   r=caml_alloc_tuple(3);
-  Store_field(r,0,Val_long(fa));
-  Store_field(r,1,Val_long(fb));
+  Store_field(r,0,caml_copy_nativeint((intnat) fa));
+  Store_field(r,1,caml_copy_nativeint((intnat) fb));
   s=newterm(a_string(aa),fa,fb);
   if(s==NULL){ fclose(fa); fclose(fb); caml_failwith("newterm"); }
-  Store_field(r,2,(value)s);
+  Store_field(r,2,Val_screen(s));
   CAMLreturn(r); END
 ML1(set_term,unit,screen)
 ML1d(delscreen,unit,screen)
 BEG1 delscreen(a_screen(aa));
-  fclose((FILE * )Long_val(Field(aa,0)));
-  fclose((FILE * )Long_val(Field(aa,1)));
+  fclose((FILE * )Nativeint_val(Field(aa,0)));
+  fclose((FILE * )Nativeint_val(Field(aa,1)));
   CAMLreturn(Val_unit); END
 ML0d(stdscr,window)
 BEG0 r_window(stdscr); END

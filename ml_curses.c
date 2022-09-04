@@ -45,9 +45,30 @@
 
 #define AWB(x) caml__dummy_##x=caml__dummy_##x; /* anti-warning bugware */
 
+static value Val_window(WINDOW *w)
+{
+  return caml_copy_nativeint((intnat) w);
+}
+
+static value Val_terminal(TERMINAL *t)
+{
+  return caml_copy_nativeint((intnat) t);
+}
+
+static value Val_screen(SCREEN *s)
+{
+  return caml_copy_nativeint((intnat) s);
+}
+
+#define Window_val(v) ((WINDOW *) Nativeint_val(v))
+
+#define Terminal_val(v) ((TERMINAL *) Nativeint_val(v))
+
+#define Screen_val(v) ((SCREEN *) Nativeint_val(v))
+
 #define r_unit(f)	f; CAMLreturn(Val_unit);
-#define r_window(f)	CAMLreturn((value)f)
-#define r_terminal(f)	CAMLreturn((value)f)
+#define r_window(f)	CAMLreturn(Val_window(f))
+#define r_terminal(f)	CAMLreturn(Val_terminal(f))
 #define r_err(f)	CAMLreturn(Val_bool((f)!=ERR))
 #define r_int(f)	CAMLreturn(Val_int(f))
 #define r_char(f)	CAMLreturn(Val_int((f)&255))
@@ -63,7 +84,7 @@
 #define r_window_int(x,y)	\
   { CAMLlocal1(ret); AWB(ret); \
     ret=caml_alloc_tuple(2); \
-    Store_field(ret,0,(value)(x)); \
+    Store_field(ret,0,Val_window(x)); \
     Store_field(ret,1,Val_int(y)); \
     CAMLreturn(ret); }
 #define r_int_int_int(x,y,z) \
@@ -78,9 +99,9 @@
     if(ret==NULL) caml_failwith("Null pointer"); \
     CAMLreturn(caml_copy_string(ret)); }
 
-#define a_window(a)	((WINDOW * )a)
-#define a_terminal(a)	((TERMINAL * )a)
-#define a_screen(a)	((SCREEN * )Field(a,2))
+#define a_window(a)	Window_val(a)
+#define a_terminal(a)	Terminal_val(a)
+#define a_screen(a)	Screen_val(Field(a,2))
 #define a_int(a)	Int_val(a)
 #define a_bool(a)	Bool_val(a)
 #define a_chtype(a)	Int_val(a)
@@ -238,7 +259,7 @@ value mlcurses_wgetch(value win)
    WINDOW* w;
 
    caml__dummy_win = caml__dummy_win;
-   w = (WINDOW *) win;
+   w = Window_val(win);
 
    caml_enter_blocking_section();
    ch = wgetch(w);
