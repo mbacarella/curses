@@ -56,27 +56,27 @@
 #define r_bool(f)	CAMLreturn(Val_bool(f))
 #define r_int_int(x,y)	\
   { CAMLlocal1(ret); AWB(ret); \
-    ret=alloc_tuple(2); \
+    ret=caml_alloc_tuple(2); \
     Store_field(ret,0,Val_int(x)); \
     Store_field(ret,1,Val_int(y)); \
     CAMLreturn(ret); }
 #define r_window_int(x,y)	\
   { CAMLlocal1(ret); AWB(ret); \
-    ret=alloc_tuple(2); \
+    ret=caml_alloc_tuple(2); \
     Store_field(ret,0,(value)(x)); \
     Store_field(ret,1,Val_int(y)); \
     CAMLreturn(ret); }
 #define r_int_int_int(x,y,z) \
   { CAMLlocal1(ret); AWB(ret); \
-    ret=alloc_tuple(3); \
+    ret=caml_alloc_tuple(3); \
     Store_field(ret,0,Val_int(x)); \
     Store_field(ret,1,Val_int(y)); \
     Store_field(ret,2,Val_int(z)); \
     CAMLreturn(ret); }
 #define r_string(f)	\
   { const char *ret=f; \
-    if(ret==NULL) failwith("Null pointer"); \
-    CAMLreturn(copy_string(ret)); }
+    if(ret==NULL) caml_failwith("Null pointer"); \
+    CAMLreturn(caml_copy_string(ret)); }
 
 #define a_window(a)	((WINDOW * )a)
 #define a_terminal(a)	((TERMINAL * )a)
@@ -85,7 +85,7 @@
 #define a_bool(a)	Bool_val(a)
 #define a_chtype(a)	Int_val(a)
 #define a_attr_t(a)	Int_val(a)
-#define a_string(a)	String_val(a)
+#define a_string(a)	Bytes_val(a)
 
 #define RA0 CAMLparam0();
 #define RA1 CAMLparam1(aa); AWB(aa);
@@ -200,7 +200,7 @@ static int putc_callback(int c)
   CAMLlocal1(ret);
 
   AWB(ret);
-  ret=callback_exn(putc_function,Val_int(c&255));
+  ret=caml_callback_exn(putc_function,Val_int(c&255));
   CAMLreturn(Is_exception_result(ret)?-1:0);
 }
 
@@ -223,9 +223,9 @@ value mlcurses_getch(void)
    CAMLparam0();
    int ch;
 
-   enter_blocking_section();
+   caml_enter_blocking_section();
    ch = getch();
-   leave_blocking_section();
+   caml_leave_blocking_section();
 
    CAMLreturn(Val_int(ch));
 }
@@ -240,9 +240,9 @@ value mlcurses_wgetch(value win)
    caml__dummy_win = caml__dummy_win;
    w = (WINDOW *) win;
 
-   enter_blocking_section();
+   caml_enter_blocking_section();
    ch = wgetch(w);
-   leave_blocking_section();
+   caml_leave_blocking_section();
 
    CAMLreturn(Val_int(ch));
 }

@@ -11,7 +11,7 @@ ML2(wechochar,err,window,chtype)
 
 #define copie(l,id,ar) int i,c=l,r; \
   chtype *t=malloc((c+1)*sizeof(chtype)); \
-  if(t==NULL) failwith("Out of memory"); \
+  if(t==NULL) caml_failwith("Out of memory"); \
   for(i=0;i<c;i++) t[i]=Int_val(Field(ar,i+id)); \
   t[i]=0;
 #define call(f) r=f; free(t); r_err(r);
@@ -192,14 +192,14 @@ ML1(ungetch,err,int)
 /* getstr */
 
 ML1d(getstr,err,string)
-BEG1 r_err(getnstr(a_string(aa),string_length(aa))); END
+BEG1 r_err(getnstr(a_string(aa),caml_string_length(aa))); END
 ML2d(wgetstr,err,window,string)
-BEG2 r_err(wgetnstr(a_window(aa),a_string(ab),string_length(ab))); END
+BEG2 r_err(wgetnstr(a_window(aa),a_string(ab),caml_string_length(ab))); END
 ML3d(mvgetstr,err,int,int,string)
-BEG3 r_err(mvgetnstr(a_int(aa),a_int(ab),a_string(ac),string_length(ac))); END
+BEG3 r_err(mvgetnstr(a_int(aa),a_int(ab),a_string(ac),caml_string_length(ac))); END
 ML4d(mvwgetstr,err,window,int,int,string)
 BEG4 r_err(mvwgetnstr(a_window(aa),a_int(ab),a_int(ac),a_string(ad),
-  string_length(ad))); END
+  caml_string_length(ad))); END
 ML3d(getnstr,err,string,int,int)
 BEG3 r_err(getnstr(a_string(aa)+a_int(ab),a_int(ac))); END
 ML4d(wgetnstr,err,window,string,int,int)
@@ -293,11 +293,11 @@ BEG3
   FILE *fa=fdopen(fda,"w"),*fb=fdopen(fdb,"r");
   SCREEN *s;
   AWB(r);
-  r=alloc_tuple(3);
+  r=caml_alloc_tuple(3);
   Store_field(r,0,Val_long(fa));
   Store_field(r,1,Val_long(fb));
   s=newterm(a_string(aa),fa,fb);
-  if(s==NULL){ fclose(fa); fclose(fb); failwith("newterm"); }
+  if(s==NULL){ fclose(fa); fclose(fb); caml_failwith("newterm"); }
   Store_field(r,2,(value)s);
   CAMLreturn(r); END
 ML1(set_term,unit,screen)
@@ -313,14 +313,14 @@ ML0d(null_window,window) BEG0 r_window(NULL); END
 /* insstr */
 
 ML1d(insstr,err,string)
-BEG1 r_err(insnstr(a_string(aa),string_length(aa))); END
+BEG1 r_err(insnstr(a_string(aa),caml_string_length(aa))); END
 ML2d(winsstr,err,window,string)
-BEG2 r_err(winsnstr(a_window(aa),a_string(ab),string_length(ab))); END
+BEG2 r_err(winsnstr(a_window(aa),a_string(ab),caml_string_length(ab))); END
 ML3d(mvinsstr,err,int,int,string)
-BEG3 r_err(mvinsnstr(a_int(aa),a_int(ab),a_string(ac),string_length(ac))); END
+BEG3 r_err(mvinsnstr(a_int(aa),a_int(ab),a_string(ac),caml_string_length(ac))); END
 ML4d(mvwinsstr,err,window,int,int,string)
 BEG4 r_err(mvwinsnstr(a_window(aa),a_int(ab),a_int(ac),
-  a_string(ad),string_length(ad))); END
+  a_string(ad),caml_string_length(ad))); END
 ML3d(insnstr,err,string,int,int)
 BEG3 r_err(insnstr(a_string(aa)+a_int(ab),a_int(ac))); END
 ML4d(winsnstr,err,window,string,int,int)
@@ -334,14 +334,14 @@ BEG6 r_err(mvwinsnstr(a_window(aa),a_int(ab),a_int(ac),
 /* instr */
 
 ML1d(instr,err,string)
-BEG1 r_err(innstr(a_string(aa),string_length(aa))); END
+BEG1 r_err(innstr(a_string(aa),caml_string_length(aa))); END
 ML2d(winstr,err,window,string)
-BEG2 r_err(winnstr(a_window(aa),a_string(ab),string_length(ab))); END
+BEG2 r_err(winnstr(a_window(aa),a_string(ab),caml_string_length(ab))); END
 ML3d(mvinstr,err,int,int,string)
-BEG3 r_err(mvinnstr(a_int(aa),a_int(ab),a_string(ac),string_length(ac))); END
+BEG3 r_err(mvinnstr(a_int(aa),a_int(ab),a_string(ac),caml_string_length(ac))); END
 ML4d(mvwinstr,err,window,int,int,string)
 BEG4 r_err(mvwinnstr(a_window(aa),a_int(ab),a_int(ac),
-  a_string(ad),string_length(ad))); END
+  a_string(ad),caml_string_length(ad))); END
 ML3d(innstr,err,string,int,int)
 BEG3 r_err(innstr(a_string(aa)+a_int(ab),a_int(ac))); END
 ML4d(winnstr,err,window,string,int,int)
@@ -392,7 +392,7 @@ ML1(napms,unit,int)
 ML1d(ripoffline,unit,bool)
 BEG1 ripoffline(Bool_val(aa)?1:-1,ripoff_callback); CAMLreturn(Val_unit); END
 ML0d(get_ripoff,window*int)
-BEG0 if(ripoff_niv==0) failwith("get_ripoff"); ripoff_niv--;
+BEG0 if(ripoff_niv==0) caml_failwith("get_ripoff"); ripoff_niv--;
   r_window_int(ripoff_w[ripoff_niv],ripoff_l[ripoff_niv]); END
 
 /* mouse */
@@ -528,8 +528,8 @@ BEG1 r_bool(tigetflag(a_string(aa))>0); END
 ML1(tigetnum,int,string)
 ML1d(tigetstr,string,string)
 BEG1 char *s=tigetstr(a_string(aa));
-  if((s==NULL)||(s==(char * )-1)) failwith("tigetstr");
-  CAMLreturn(copy_string(s)); END
+  if((s==NULL)||(s==(char * )-1)) caml_failwith("tigetstr");
+  CAMLreturn(caml_copy_string(s)); END
 ML3d(tputs,err,string,int,(char->unit))
 BEG3 putc_function=ac;
   r_err(tputs(a_string(aa),a_int(ab),putc_callback)); END
@@ -556,20 +556,20 @@ BEG2 int t[10],i,n=Wosize_val(ab);
 #define arrayret(nt) \
   CAMLlocal1(s); \
   int n=a_int(aa); AWB(s) \
-  s=alloc_tuple(3); \
+  s=caml_alloc_tuple(3); \
   Store_field(s,0,Val_unit); \
   Store_field(s,1,Val_unit); \
   Store_field(s,2,Val_unit); \
   if((nt##names[n]==NULL)||(nt##codes[n]==NULL)||(nt##fnames[n]==NULL)){ \
     CAMLlocal1(ns); AWB(ns) \
-    ns=copy_string(""); \
+    ns=caml_copy_string(""); \
     Store_field(s,0,ns); \
     Store_field(s,1,ns); \
     Store_field(s,2,ns); \
   }else{ \
-    Store_field(s,0,copy_string(nt##names[n])); \
-    Store_field(s,1,copy_string(nt##codes[n])); \
-    Store_field(s,2,copy_string(nt##fnames[n])); \
+    Store_field(s,0,caml_copy_string(nt##names[n])); \
+    Store_field(s,1,caml_copy_string(nt##codes[n])); \
+    Store_field(s,2,caml_copy_string(nt##fnames[n])); \
   } \
   CAMLreturn(s);
 #ifndef PDCURSES
@@ -625,7 +625,7 @@ ML1(wsyncdown,unit,window)
 #define ca(i,n) Store_field(tr,i,Val_int(ACS_##n));
 ML0d(get_acs_codes,Acs.acs)
 BEG0 CAMLlocal1(tr); AWB(tr)
-  tr=alloc_tuple(32);
+  tr=caml_alloc_tuple(32);
 ca( 0,ULCORNER)	ca( 1,LLCORNER)	ca( 2,URCORNER)	ca( 3,LRCORNER)
 ca( 4,LTEE)	ca( 5,RTEE)	ca( 6,BTEE)	ca( 7,TTEE)
 ca( 8,HLINE)	ca( 9,VLINE)	ca(10,PLUS)	ca(11,S1)
