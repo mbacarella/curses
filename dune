@@ -43,7 +43,7 @@
  (deps _curses.ml _config.ml _functions.c _keys.ml config.h)
  (action
   (chdir
-   %{workspace_root}
+   %{project_root}
    (with-stdout-to
     %{target}
     (system "%{cc} -x c -E _curses.ml")))))
