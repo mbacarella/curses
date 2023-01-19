@@ -6,6 +6,7 @@ unreleased
 * Add missing dependency on Unix #8 (Thanks @dra27)
 * Add a test bin
 * Fix up for OCaml 5.0.0. Thanks @rrbq for #9
+* Make it possible to vendor this package. Thanks @gridbugs for #10
 
 1.0.10 (2021-11-21)
 =====
