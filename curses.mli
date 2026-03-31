@@ -777,3 +777,21 @@ sig
   val wide_ncurses : bool
 end
 
+(** {2 Locale} *)
+
+(** Locale category constants for use with {!setlocale}. *)
+
+val lC_ALL : int
+val lC_COLLATE : int
+val lC_CTYPE : int
+val lC_MESSAGES : int
+val lC_MONETARY : int
+val lC_NUMERIC : int
+val lC_TIME : int
+
+(** [setlocale category locale] sets the locale for the given category.
+    Must be called before {!initscr} for Unicode/wide character support.
+    Use [setlocale lC_ALL ""] to inherit the locale from the environment.
+    Returns [None] if the locale setting failed. *)
+val setlocale : int -> string -> string option
+

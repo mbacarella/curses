@@ -9,6 +9,7 @@
 #include <caml/fail.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <locale.h>
 
 /* For PDCurses we need to define the following so that global
  * variables are declared (in the header) with __dllspec(dllimport).
@@ -266,4 +267,26 @@ value mlcurses_wgetch(value win)
    caml_leave_blocking_section();
 
    CAMLreturn(Val_int(ch));
+}
+
+static int locale_categories[] = {
+  LC_CTYPE, LC_NUMERIC, LC_TIME, LC_COLLATE, LC_MONETARY, LC_MESSAGES, LC_ALL
+};
+#define NUM_LOCALE_CATEGORIES (sizeof(locale_categories) / sizeof(locale_categories[0]))
+
+value mlcurses_setlocale(value cat, value loc)
+{
+  CAMLparam2(cat, loc);
+  int idx;
+  const char *result;
+
+  idx = Int_val(cat);
+  if (idx < 0 || idx >= (int)NUM_LOCALE_CATEGORIES)
+    caml_invalid_argument("setlocale: invalid category");
+
+  result = setlocale(locale_categories[idx], String_val(loc));
+  if (result == NULL)
+    CAMLreturn(Val_none);
+  else
+    CAMLreturn(caml_alloc_some(caml_copy_string(result)));
 }

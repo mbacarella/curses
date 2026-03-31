@@ -1,3 +1,7 @@
+1.0.12 (2026-03-31)
+=====
+* Expose setlocale to enable UTF8 support
+
 1.0.11 (2023-01-19)
 =====
 * Don't hard-code gcc, use cc instead. Thanks @atupone for PR #7

@@ -141,9 +141,9 @@ let () =
 
 /*
 (* Bon, je vais recopier les constantes directement, parceque je n'ai
- * aucune idée de comment générer ça automatiquement proprement. Si ça ne
+ * aucune idï¿½e de comment gï¿½nï¿½rer ï¿½a automatiquement proprement. Si ï¿½a ne
  * marche pas chez vous, il vous suffit de regarder l'include, et de
- * corriger à la main. Faites-le moi savoir, à tout hasard... *)
+ * corriger ï¿½ la main. Faites-le moi savoir, ï¿½ tout hasard... *)
 */
 
 module A = struct
@@ -171,7 +171,7 @@ module A = struct
   let pair_number a = (a land color) lsr 8
 end
 
-(*/* Je sais, c'est moche, mais ça marche */*)
+(*/* Je sais, c'est moche, mais ï¿½a marche */*)
 module WA = A
 
 module Color = struct
@@ -193,4 +193,14 @@ end
 module Curses_config = struct
 #include "_config.ml"
 end
+
+let lC_CTYPE = 0
+let lC_NUMERIC = 1
+let lC_TIME = 2
+let lC_COLLATE = 3
+let lC_MONETARY = 4
+let lC_MESSAGES = 5
+let lC_ALL = 6
+
+external setlocale : int -> string -> string option = "mlcurses_setlocale"
 
