@@ -1,3 +1,7 @@
+UNRELEASED
+==========
+* Fix getstr and getnstr to return err instead of (string, unit). Thanks @seejohnrun for #13
+
 1.0.11 (2023-01-19)
 =====
 * Don't hard-code gcc, use cc instead. Thanks @atupone for PR #7
