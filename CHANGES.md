@@ -1,6 +1,7 @@
-1.0.12 (2026-03-31)
+1.0.12 (2026-04-01)
 =====
 * Expose setlocale to enable UTF8 support
+* Fix getstr and getnstr to return err instead of (string, unit). Thanks @seejohnrun for #13
 
 1.0.11 (2023-01-19)
 =====

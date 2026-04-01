@@ -114,6 +114,17 @@ end
  * to permit proper threading behavior *)
 ML0(getch,int)
 ML1(wgetch,int,window)
+ML1(getnstr_inner,(string * err),int)
+
+(* Wrap the inner function so we can return a result *)
+let tuple_to_result (str, err) =
+  match err with
+  | false -> Error ()
+  | true -> Ok str
+;;
+
+let getnstr n = tuple_to_result (getnstr_inner n)
+let getstr () = getnstr 1024
 
 let null_window = null_window ()
 

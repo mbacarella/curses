@@ -464,12 +464,12 @@ val mvgetch : int -> int -> int
 val mvwgetch : window -> int -> int -> int
 val ungetch : int -> err
 
-(** Read a string in a window. *)
-val getstr : string -> err
+(** Read a string in a window. Note: `getstr` is implemented as `getnstr 1024` to avoid overflows *)
+val getstr : unit -> (string, unit) result
 val wgetstr : window -> string -> err
 val mvgetstr : int -> int -> string -> err
 val mvwgetstr : window -> int -> int -> string -> err
-val getnstr : string -> int -> int -> err
+val getnstr : int -> (string, unit) result
 val wgetnstr : window -> string -> int -> int -> err
 val mvgetnstr : int -> int -> string -> int -> int -> err
 val mvwgetnstr : window -> int -> int -> string -> int -> int -> err

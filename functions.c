@@ -1,3 +1,4 @@
+/* clang-format off */
 /* addch */
 
 ML1(addch,err,chtype)
@@ -191,8 +192,6 @@ ML1(ungetch,err,int)
 
 /* getstr */
 
-ML1d(getstr,err,string)
-BEG1 r_err(getnstr(a_string(aa),caml_string_length(aa))); END
 ML2d(wgetstr,err,window,string)
 BEG2 r_err(wgetnstr(a_window(aa),a_string(ab),caml_string_length(ab))); END
 ML3d(mvgetstr,err,int,int,string)
@@ -200,8 +199,6 @@ BEG3 r_err(mvgetnstr(a_int(aa),a_int(ab),a_string(ac),caml_string_length(ac))); 
 ML4d(mvwgetstr,err,window,int,int,string)
 BEG4 r_err(mvwgetnstr(a_window(aa),a_int(ab),a_int(ac),a_string(ad),
   caml_string_length(ad))); END
-ML3d(getnstr,err,string,int,int)
-BEG3 r_err(getnstr(a_string(aa)+a_int(ab),a_int(ac))); END
 ML4d(wgetnstr,err,window,string,int,int)
 BEG4 r_err(wgetnstr(a_window(aa),a_string(ab)+a_int(ac),a_int(ad))); END
 ML5d(mvgetnstr,err,int,int,string,int,int)
