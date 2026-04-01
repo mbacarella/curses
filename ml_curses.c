@@ -268,7 +268,7 @@ value mlcurses_wgetch(value win)
    CAMLreturn(Val_int(ch));
 }
 
-value mlcurses_getnstr_inner(int n)
+value mlcurses_getnstr_inner(value n)
 {
    CAMLparam1(n);
    int max_length = Int_val(n);
