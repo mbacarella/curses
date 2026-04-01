@@ -1,3 +1,4 @@
+/* clang-format off */
 /* addch */
 
 ML1(addch,err,chtype)
