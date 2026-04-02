@@ -1,7 +1,9 @@
 (executable
  (name test)
+ (modules test)
  (libraries curses))
 
 (executable
  (name unicode_trading)
+ (modules unicode_trading)
  (libraries curses))
