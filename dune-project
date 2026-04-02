@@ -24,4 +24,4 @@
   conf-pkg-config
   dune-configurator
   (ocaml
-   (>= 4.02.0))))
+   (>= 4.12.0))))
